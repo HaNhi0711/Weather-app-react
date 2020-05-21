@@ -1,5 +1,20 @@
 .list {
-	width: 500px;
+	width: 200px;
 	margin: 20px auto;
-	padding-top: 24px;
+
 }
+
+.list-item {
+	/* text-decoration: line-through; */
+	
+}
+
+.list-item.isDone {
+	text-decoration: line-through;
+}
+.list-container {
+	
+	display: flex;
+	justify-content: center;
+}
+
