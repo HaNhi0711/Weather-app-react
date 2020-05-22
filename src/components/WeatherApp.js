@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
 import {Grid, CardContent, Toolbar, AppBar, Typography, Card, Container} from '@material-ui/core'
+import CurrentWeather from './CurrentWeather'
+import { CircularProgress } from '@material-ui/core'
+import WeatherHourDate from './WeatherHourDate'
+
+
 // import MenuIcon from '@material-ui/icons/Menu'
 export default class WeatherApp extends Component {
 
@@ -12,7 +17,10 @@ export default class WeatherApp extends Component {
     }
 
     componentDidMount() {
-        this.getWeatherDate();
+        // setTimeout(() => {
+        //     this.getWeatherDate()
+        // }, 2000);
+        this.getWeatherDate()
     }
 
     getWeatherDate = async () =>  {
@@ -30,68 +38,97 @@ export default class WeatherApp extends Component {
     }
     };
 
-    renderCurrentWeather =() => {
-        if(this.state.weatherData.current) {
-            const { current } = this.state.weatherData;
-            // let nowDate = new Date();
-            const imgCur = `http://openweathermap.org/img/wn/${current.weather[0].icon}@4x.png`;
-            return (
-                <CardContent>
-                    <Grid
-                        container
-                        direction="row"
-                    >
+    // renderCurrentWeather =() => {
+    //     if(this.state.weatherData.current) {
+    //         // const { current } = this.state.weatherData;
+    //         // // let nowDate = new Date();
+    //         // const imgCur = `http://openweathermap.org/img/wn/${current.weather[0].icon}@4x.png`;
+    //     //     return (
+    //     //         <CardContent>
+    //     //             <Grid
+    //     //                 container
+    //     //                 direction="row"
+    //     //             >
 
-                        <Grid 
-                            item
-                            xs={4}
-                        >
-                            <img src={imgCur} style={{width: "300px"}} alt="" />
-                        </Grid>
-                        <Grid 
-                            item
-                            xs={8}
-                        >
+    //     //                 <Grid 
+    //     //                     item
+    //     //                     xs={4}
+    //     //                 >
+    //     //                     <img src={imgCur} style={{width: "300px"}} alt="" />
+    //     //                 </Grid>
+    //     //                 <Grid 
+    //     //                     item
+    //     //                     xs={8}
+    //     //                 >
                             
-                            <h3><Moment format="HH:mm DD/MM/YYYY">{current.dt*1000}</Moment></h3>
-                            <h1>{current.temp}°C</h1>
-                            <h2 style={{textTransform:"capitalize"}}>{current.weather[0].description}</h2>
-                            <p>Cảm giác: {current.feels_like}°C</p>
-                            <p>Do am: {current.humidity}%</p>
-                            <p>Toc  do gio: {current.wind_speed} m/s</p>
-                            <p>Ap suat: {current.pressure} hpa</p>
-                            <p>Binh Minh: <Moment format="HH:mm">{current.sunrise*1000}</Moment></p>
-                            <p>Hoang Hon: <Moment format="HH:mm">{current.sunset*1000}</Moment></p>
+    //     //                     <h3><Moment format="HH:mm DD/MM/YYYY">{current.dt*1000}</Moment></h3>
+    //     //                     <h1>{current.temp}°C</h1>
+    //     //                     <h2 style={{textTransform:"capitalize"}}>{current.weather[0].description}</h2>
+    //     //                     <p>Cảm giác: {current.feels_like}°C</p>
+    //     //                     <p>Do am: {current.humidity}%</p>
+    //     //                     <p>Toc  do gio: {current.wind_speed} m/s</p>
+    //     //                     <p>Ap suat: {current.pressure} hpa</p>
+    //     //                     <p>Binh Minh: <Moment format="HH:mm">{current.sunrise*1000}</Moment></p>
+    //     //                     <p>Hoang Hon: <Moment format="HH:mm">{current.sunset*1000}</Moment></p>
                         
-                        </Grid>
-                    </Grid>
-                </CardContent>
-        )
-        }
+    //     //                 </Grid>
+    //     //             </Grid>
+    //     //         </CardContent>
+    //     // )
+    //     }
         
+    // }
+
+    // renderWeatherHourDate = () => {
+    //     if(this.state.weatherData.current) {
+    //         const { daily } = this.state.weatherData;
+    //         return daily.map((el, index) => {
+    //             const imageUrl = `http://openweathermap.org/img/wn/${el.weather[0].icon}@4x.png`;
+    //             return (
+    //                 <Grid item xs={3} key={index}>
+    //                     <Card>
+    //                         <CardContent style={{textAlign:"center"}}>
+    //                             <h4><Moment format="DD/MM">{el.dt*1000}</Moment></h4>
+    //                             <h3>{el.temp.min}°C - {el.temp.max}°C</h3>
+    //                             <img src={imageUrl} alt="" style={{width: "150px"}}/>
+    //                             <h3 style={{textTransform:"capitalize"}}>{el.weather[0].description}</h3>
+    //                         </CardContent>
+    //                     </Card>
+    //                 </Grid>
+    //             );
+    //         });
+            
+    //     }
+    // }
+
+    renderContent = () => {
+        if(this.state.weatherData.current) {
+            return (
+                <React.Fragment>
+                    <CurrentWeather current = {this.state.weatherData.current}/>
+                </React.Fragment>
+            );
+        }
+
+        else {
+            return <CircularProgress/>;
+        }
     }
 
-    renderWeatherHourDate = () => {
-        if(this.state.weatherData.current) {
-            const { daily } = this.state.weatherData;
-            return daily.map((el, index) => {
-                const imageUrl = `http://openweathermap.org/img/wn/${el.weather[0].icon}@4x.png`;
-                return (
-                    <Grid item xs={3} key={index}>
-                        <Card>
-                            <CardContent style={{textAlign:"center"}}>
-                                <h4><Moment format="DD/MM">{el.dt*1000}</Moment></h4>
-                                <h3>{el.temp.min}°C - {el.temp.max}°C</h3>
-                                <img src={imageUrl} alt="" style={{width: "150px"}}/>
-                                <h3 style={{textTransform:"capitalize"}}>{el.weather[0].description}</h3>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                );
-            });
-            
+    renderListHourDate = () => {
+        if(this.state.weatherData.daily) {
+            return (
+                <React.Fragment>
+                    <WeatherHourDate daily = {this.state.weatherData.daily}/>
+                </React.Fragment>
+            );
+        }
+
+        else {
+            return <CircularProgress/>;
         }
     }
+
 
     render() {
         return (
@@ -113,10 +150,13 @@ export default class WeatherApp extends Component {
                         >   
                             <Grid item xs={12}>
                                 <Card style={{marginTop:"20px"}}>
-                                    {this.renderCurrentWeather()} 
+                                    {/* {this.renderCurrentWeather()}  */}
+                                    {this.renderContent()}
+                          
+
                                 </Card>
                             </Grid>   
-                            {this.renderWeatherHourDate()}
+                            {this.renderListHourDate()}
                         </Grid>
                         </Container>
                     </Grid>
