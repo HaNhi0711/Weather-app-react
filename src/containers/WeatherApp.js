@@ -3,6 +3,7 @@ import Moment from 'react-moment'
 import 'moment-timezone'
 import {Grid, CardContent, Toolbar, AppBar, Typography, Card, Container, TextField} from '@material-ui/core'
 // import MenuIcon from '@material-ui/icons/Menu'
+
 export default class WeatherApp extends Component {
 
     constructor(props) {
@@ -19,6 +20,7 @@ export default class WeatherApp extends Component {
         // this.onSubmit = this.onSubmit.bind(this);
     }
 
+    
     componentDidMount() {
         this.setState({
             weatherData: {}
@@ -165,15 +167,17 @@ export default class WeatherApp extends Component {
     }
 
     render() {
+        // const queryResult = new URLSearchParams(this.props.location.search);
+        // const queryName = queryResult.get('name');
         return (
             <div>
-                <AppBar position="relative">
+                {/* <AppBar position="relative">
                     <Toolbar>
                         <Typography variant="h6">
                         MindX WeatherApp <span id="city-name"></span>
                         </Typography>
                     </Toolbar>
-                    </AppBar>
+                </AppBar> */}
                 <Grid container direction="row" justify="center"  alignItems="center">
                     <Grid item xs={10} >
                         <Container>
@@ -188,13 +192,18 @@ export default class WeatherApp extends Component {
                                         onKeyDown={this.updateInputValue}
                                     />
                                 </Card>
+                                
                             </Grid>                          
                             <Grid item xs={12}>
                                 <Card style={{marginTop:"20px"}}>
-                                    {this.renderCurrentWeather()} 
+                                    {/* {this.renderCurrentWeather()}  */}
+                                    <h1>{this.props.match.params.name}</h1>
+                                    {this.renderCurrentWeather()}
                                 </Card>
                             </Grid>   
-                            {this.renderWeatherHourDate()}
+                            {/* {this.renderWeatherHourDate()} */}
+                                    <h1>{this.props.match.params.name}</h1>
+                                    {this.renderWeatherHourDate()}
                         </Grid>
                         </Container>
                     </Grid>
